@@ -1,0 +1,102 @@
+swagger: '2.0'
+info:
+  description: Authentication Api
+  version: 1.0.0
+  title: Performs simple authentication
+
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: users
+  description: Operations available to regular developers
+
+paths:
+  /login:
+    post:
+      summary: login endpont
+      operationId: login
+      description: allows login of existing users
+      produces:
+      - application/json
+      consume: 
+      - application/json
+      parameters:
+      - in: body
+        name: login
+        description: username and password payload
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: login success
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                example: abc.efg.hij
+        403:
+          description: bad username/password combination
+        500:
+          description: internal server error
+  /create:
+    post:
+      summary: create users
+      operationId: createUser
+      description: create a new user with username and password
+      produces:
+      - application/json
+      consume: 
+      - application/json
+      parameters:
+      - in: body
+        name: login
+        description: username and password payload
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: create success
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                example: abc.efg.hij
+        400:
+          description: invalid username/password
+          schema:
+            type: string
+            example: bad password idio
+        500:
+          description: internal server error
+          schema:
+            type: string
+            example: uwu we make mistake
+      
+          
+
+definitions:
+  Login:
+    type: object
+    required:
+    - username
+    - password
+    properties:
+      username:
+        type: string
+        example: oldgreg
+      password:
+        type: string
+        example: badPassword
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /vcongos/andyauth/1.0.0
+schemes:
+ - http

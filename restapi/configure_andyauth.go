@@ -44,6 +44,12 @@ func configureAPI(api *operations.AndyauthAPI) http.Handler {
 		})
 	}
 
+	if api.VerifyHandler == nil {
+		api.VerifyHandler = operations.VerifyHandlerFunc(func(params operations.VerifyParams) middleware.Responder {
+			return middleware.NotImplemented("operation not yet implemented")
+		})
+	}
+
 	api.ServerShutdown = func() {}
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))

@@ -6,7 +6,7 @@ Authentication Api
 
 
     Schemes:
-      http
+      https
     Host: virtserver.swaggerhub.com
     BasePath: /vcongos/andyauth/1.0.0
     Version: 1.0.0

@@ -43,6 +43,9 @@ func NewAndyauthAPI(spec *loads.Document) *AndyauthAPI {
 		LoginHandler: LoginHandlerFunc(func(params LoginParams) middleware.Responder {
 			return middleware.NotImplemented("operation Login has not yet been implemented")
 		}),
+		VerifyHandler: VerifyHandlerFunc(func(params VerifyParams) middleware.Responder {
+			return middleware.NotImplemented("operation Verify has not yet been implemented")
+		}),
 	}
 }
 
@@ -78,6 +81,8 @@ type AndyauthAPI struct {
 	CreateUserHandler CreateUserHandler
 	// LoginHandler sets the operation handler for the login operation
 	LoginHandler LoginHandler
+	// VerifyHandler sets the operation handler for the verify operation
+	VerifyHandler VerifyHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -147,6 +152,10 @@ func (o *AndyauthAPI) Validate() error {
 
 	if o.LoginHandler == nil {
 		unregistered = append(unregistered, "LoginHandler")
+	}
+
+	if o.VerifyHandler == nil {
+		unregistered = append(unregistered, "VerifyHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -256,6 +265,11 @@ func (o *AndyauthAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/login"] = NewLogin(o.context, o.LoginHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/verify"] = NewVerify(o.context, o.VerifyHandler)
 
 }
 

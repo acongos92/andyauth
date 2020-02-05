@@ -19,7 +19,7 @@ var (
 func init() {
 	SwaggerJSON = json.RawMessage([]byte(`{
   "schemes": [
-    "http"
+    "https"
   ],
   "swagger": "2.0",
   "info": {
@@ -37,6 +37,9 @@ func init() {
     "/create": {
       "post": {
         "description": "create a new user with username and password",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
@@ -75,8 +78,7 @@ func init() {
           "500": {
             "description": "internal server error",
             "schema": {
-              "type": "string",
-              "example": "uwu we make mistake"
+              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -85,6 +87,9 @@ func init() {
     "/login": {
       "post": {
         "description": "allows login of existing users",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
@@ -117,13 +122,70 @@ func init() {
             "description": "bad username/password combination"
           },
           "500": {
-            "description": "internal server error"
+            "description": "internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/verify": {
+      "post": {
+        "description": "verify the signature of this jwt",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "verify the jwt",
+        "operationId": "verify",
+        "parameters": [
+          {
+            "description": "token to be verified",
+            "name": "token",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "valid token"
+          },
+          "403": {
+            "description": "token was not valid"
+          },
+          "500": {
+            "description": "internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
     }
   },
   "definitions": {
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "example": "error message lol"
+        }
+      }
+    },
     "Login": {
       "type": "object",
       "required": [
@@ -138,6 +200,18 @@ func init() {
         "username": {
           "type": "string",
           "example": "oldgreg"
+        }
+      }
+    },
+    "Token": {
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "aaa.bbb.ccc"
         }
       }
     }
@@ -155,7 +229,7 @@ func init() {
 }`))
 	FlatSwaggerJSON = json.RawMessage([]byte(`{
   "schemes": [
-    "http"
+    "https"
   ],
   "swagger": "2.0",
   "info": {
@@ -173,6 +247,9 @@ func init() {
     "/create": {
       "post": {
         "description": "create a new user with username and password",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
@@ -211,8 +288,7 @@ func init() {
           "500": {
             "description": "internal server error",
             "schema": {
-              "type": "string",
-              "example": "uwu we make mistake"
+              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -221,6 +297,9 @@ func init() {
     "/login": {
       "post": {
         "description": "allows login of existing users",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
@@ -253,13 +332,70 @@ func init() {
             "description": "bad username/password combination"
           },
           "500": {
-            "description": "internal server error"
+            "description": "internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/verify": {
+      "post": {
+        "description": "verify the signature of this jwt",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "verify the jwt",
+        "operationId": "verify",
+        "parameters": [
+          {
+            "description": "token to be verified",
+            "name": "token",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "valid token"
+          },
+          "403": {
+            "description": "token was not valid"
+          },
+          "500": {
+            "description": "internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
     }
   },
   "definitions": {
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "example": "error message lol"
+        }
+      }
+    },
     "Login": {
       "type": "object",
       "required": [
@@ -274,6 +410,18 @@ func init() {
         "username": {
           "type": "string",
           "example": "oldgreg"
+        }
+      }
+    },
+    "Token": {
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "aaa.bbb.ccc"
         }
       }
     }

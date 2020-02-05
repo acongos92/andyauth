@@ -9,6 +9,8 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	models "github.com/acongos92/andyauth/models"
 )
 
 // CreateUserOKCode is the HTTP code returned for type CreateUserOK
@@ -109,7 +111,7 @@ type CreateUserInternalServerError struct {
 	/*
 	  In: Body
 	*/
-	Payload string `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 // NewCreateUserInternalServerError creates CreateUserInternalServerError with default headers values
@@ -119,13 +121,13 @@ func NewCreateUserInternalServerError() *CreateUserInternalServerError {
 }
 
 // WithPayload adds the payload to the create user internal server error response
-func (o *CreateUserInternalServerError) WithPayload(payload string) *CreateUserInternalServerError {
+func (o *CreateUserInternalServerError) WithPayload(payload *models.Error) *CreateUserInternalServerError {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the create user internal server error response
-func (o *CreateUserInternalServerError) SetPayload(payload string) {
+func (o *CreateUserInternalServerError) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -133,8 +135,10 @@ func (o *CreateUserInternalServerError) SetPayload(payload string) {
 func (o *CreateUserInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(500)
-	payload := o.Payload
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
 	}
 }

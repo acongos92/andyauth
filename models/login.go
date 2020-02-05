@@ -17,24 +17,16 @@ import (
 // swagger:model Login
 type Login struct {
 
-	// password
+	// user
 	// Required: true
-	Password *string `json:"password"`
-
-	// username
-	// Required: true
-	Username *string `json:"username"`
+	User *User `json:"user"`
 }
 
 // Validate validates this login
 func (m *Login) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validatePassword(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateUsername(formats); err != nil {
+	if err := m.validateUser(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -44,19 +36,19 @@ func (m *Login) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Login) validatePassword(formats strfmt.Registry) error {
+func (m *Login) validateUser(formats strfmt.Registry) error {
 
-	if err := validate.Required("password", "body", m.Password); err != nil {
+	if err := validate.Required("user", "body", m.User); err != nil {
 		return err
 	}
 
-	return nil
-}
-
-func (m *Login) validateUsername(formats strfmt.Registry) error {
-
-	if err := validate.Required("username", "body", m.Username); err != nil {
-		return err
+	if m.User != nil {
+		if err := m.User.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("user")
+			}
+			return err
+		}
 	}
 
 	return nil

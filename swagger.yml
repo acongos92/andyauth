@@ -24,8 +24,6 @@ paths:
       description: allows login of existing users
       produces:
       - application/json
-      consumes:
-      - application/json
       parameters:
       - in: body
         name: login
@@ -53,8 +51,6 @@ paths:
       operationId: createUser
       description: create a new user with username and password
       produces:
-      - application/json
-      consumes:
       - application/json
       parameters:
       - in: body
@@ -112,15 +108,10 @@ definitions:
   Login:
     type: object
     required:
-    - username
-    - password
+      - user
     properties:
-      username:
-        type: string
-        example: oldgreg
-      password:
-        type: string
-        example: badPassword
+      user:
+        $ref: '#/definitions/User'
   Token:
     type: object
     required:
@@ -129,6 +120,18 @@ definitions:
       token:
         type: string
         example: aaa.bbb.ccc
+  User: 
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username: 
+        type: string
+        example: name
+      password:
+        type: string 
+        example: password
   Error:
     type: object
     required:

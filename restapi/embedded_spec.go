@@ -37,9 +37,6 @@ func init() {
     "/create": {
       "post": {
         "description": "create a new user with username and password",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -87,9 +84,6 @@ func init() {
     "/login": {
       "post": {
         "description": "allows login of existing users",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -189,17 +183,11 @@ func init() {
     "Login": {
       "type": "object",
       "required": [
-        "username",
-        "password"
+        "user"
       ],
       "properties": {
-        "password": {
-          "type": "string",
-          "example": "badPassword"
-        },
-        "username": {
-          "type": "string",
-          "example": "oldgreg"
+        "user": {
+          "$ref": "#/definitions/User"
         }
       }
     },
@@ -212,6 +200,23 @@ func init() {
         "token": {
           "type": "string",
           "example": "aaa.bbb.ccc"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "username": {
+          "type": "string",
+          "example": "name"
         }
       }
     }
@@ -247,9 +252,6 @@ func init() {
     "/create": {
       "post": {
         "description": "create a new user with username and password",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -297,9 +299,6 @@ func init() {
     "/login": {
       "post": {
         "description": "allows login of existing users",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -399,17 +398,11 @@ func init() {
     "Login": {
       "type": "object",
       "required": [
-        "username",
-        "password"
+        "user"
       ],
       "properties": {
-        "password": {
-          "type": "string",
-          "example": "badPassword"
-        },
-        "username": {
-          "type": "string",
-          "example": "oldgreg"
+        "user": {
+          "$ref": "#/definitions/User"
         }
       }
     },
@@ -422,6 +415,23 @@ func init() {
         "token": {
           "type": "string",
           "example": "aaa.bbb.ccc"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "username": {
+          "type": "string",
+          "example": "name"
         }
       }
     }
